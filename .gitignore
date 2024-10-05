@@ -1,0 +1,13 @@
+# Ignore build directory
+build/
+
+# Ignore VS Code settings except launch.json and tasks.json
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# Ignore other common files
+*.log
+*.tmp
+*.swp
+CMakeLists.txt:Zone.Identifier
