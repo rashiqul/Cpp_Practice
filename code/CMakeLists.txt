@@ -1,2 +1,2 @@
+# Only delegate to src
 add_subdirectory(src)
-add_subdirectory(inc)

@@ -1,3 +1,8 @@
-# Add the target executable
 add_executable(${EXECUTABLE_NAME} main.cpp)
-target_link_libraries(${EXECUTABLE_NAME} PUBLIC ${LIBRARY_NAME})
+
+# Link all required modules here
+target_link_libraries(${EXECUTABLE_NAME}
+    PRIVATE
+    FixedArray
+    # Add other module libraries as needed
+)
