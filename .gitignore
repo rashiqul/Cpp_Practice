@@ -1,5 +1,6 @@
 # Ignore build directory
 build/
+.cache/
 
 # Ignore VS Code settings except launch.json and tasks.json
 .vscode/*
