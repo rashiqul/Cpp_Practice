@@ -9,3 +9,5 @@ build: configure
 clean:
 	rm -rf build
 
+run:
+	./build/main/Executable
