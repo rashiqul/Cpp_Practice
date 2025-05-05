@@ -1,5 +1,5 @@
 # =========================================
-# Makefile for C++ Modular Project with Tests + Coverage
+# Makefile for C++ Modular Project with GTest + Coverage
 # Author: Rashiqul
 # =========================================
 
@@ -38,30 +38,48 @@ run: build
 run-tests: build
 	@echo "[Test] Running unit tests via GoogleTest..."
 	./build/test/TestExecutable
-
-# -----------------------------------------
-# Show test results manually (alternative to run-tests)
-# Run this if you've already built and want to re-view test output
-# -----------------------------------------
-show-test-results:
-	@echo "[Test] Showing existing test results from last CTest run..."
-	cd build && ctest --output-on-failure
+	@echo "[Test] ✅ Done! Check the output above for test results."
 
 # -----------------------------------------
 # Generate coverage report using gcovr
-# Assumes tests and code were built with --coverage flags
 # -----------------------------------------
 coverage: build
 	@echo "[Coverage] Building TestExecutable..."
 	cd build && cmake --build . --target TestExecutable
 
-	@echo "[Coverage] Running tests sequentially for clean coverage..."
-	cd build && ctest --output-on-failure --schedule-random=OFF --parallel 1
+	@echo "[Coverage] Running tests to collect coverage data..."
+	./build/test/TestExecutable
 
 	@echo "[Coverage] Generating coverage reports in build/coverage/..."
 	cd build && mkdir -p coverage
-	cd build && gcovr -r .. --html --html-details -o coverage/index.html
-	cd build && gcovr -r .. --xml -o coverage/coverage.xml
-	cd build && gcovr -r .. --txt -o coverage/summary.txt
+
+# ---------------------------
+# HTML Report
+# ---------------------------
+# Use root as project root, filter to include only code/src,
+# and exclude test/ and googletest files
+	cd build && gcovr -r .. \
+	    --filter='code/src' \
+	    --exclude='test' \
+	    --exclude='.*googletest.*' \
+	    --html --html-details -o coverage/index.html
+
+# ---------------------------
+# XML Report (CI Tools)
+# ---------------------------
+	cd build && gcovr -r .. \
+	    --filter='code/src' \
+	    --exclude='test' \
+	    --exclude='.*googletest.*' \
+	    --xml -o coverage/coverage.xml
+
+# ---------------------------
+# Text Summary Report
+# ---------------------------
+	cd build && gcovr -r .. \
+	    --filter='code/src' \
+	    --exclude='test' \
+	    --exclude='.*googletest.*' \
+	    --txt -o coverage/summary.txt
 
 	@echo "[Coverage] ✅ Done! Open build/coverage/index.html to view the HTML report."
