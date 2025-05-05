@@ -1,5 +1,5 @@
 # =========================================
-# Makefile for C++ Modular Project with GTest + Coverage
+# Makefile for C++ Modular Project with GoogleTest + Coverage
 # Author: Rashiqul
 # =========================================
 
@@ -11,75 +11,59 @@ configure:
 	rm -rf build
 	mkdir build
 	cd build && cmake ..
-	@echo "[Config] Done. You can now run 'make build' or 'make run'"
+	@echo "[Config] ✅ Done. Run 'make build' or 'make run'"
 
 # -----------------------------------------
-# Compile the project (depends on configure)
+# Compile the full project
 # -----------------------------------------
 build: configure
 	cd build && cmake --build .
 
 # -----------------------------------------
-# Clean build files and leftover coverage artifacts
+# Clean build files and coverage artifacts
 # -----------------------------------------
 clean:
 	rm -rf build
 	find . -name "*.gcda" -o -name "*.gcno" -o -name "*.gcov" -delete
 
 # -----------------------------------------
-# Run the main executable
+# Run the main executable (if present)
 # -----------------------------------------
 run: build
 	./build/main/Executable
 
 # -----------------------------------------
-# Run all tests using GoogleTest directly
+# Run unit tests using GoogleTest (direct binary execution)
 # -----------------------------------------
 run-tests: build
 	@echo "[Test] Running unit tests via GoogleTest..."
 	./build/test/TestExecutable
-	@echo "[Test] ✅ Done! Check the output above for test results."
+	@echo "[Test] ✅ Tests finished. Review the output above."
 
 # -----------------------------------------
-# Generate coverage report using gcovr
+# Generate coverage reports using gcovr
+# Adjusted to use project root (..) to match real source paths
 # -----------------------------------------
-coverage: build
-	@echo "[Coverage] Building TestExecutable..."
-	cd build && cmake --build . --target TestExecutable
-
-	@echo "[Coverage] Running tests to collect coverage data..."
+coverage:
+	@echo "[Coverage] Running unit tests..."
 	./build/test/TestExecutable
 
-	@echo "[Coverage] Generating coverage reports in build/coverage/..."
+	@echo "[Coverage] Generating reports in build/coverage/..."
 	cd build && mkdir -p coverage
 
-# ---------------------------
-# HTML Report
-# ---------------------------
-# Use root as project root, filter to include only code/src,
-# and exclude test/ and googletest files
 	cd build && gcovr -r .. \
-	    --filter='code/src' \
-	    --exclude='test' \
-	    --exclude='.*googletest.*' \
-	    --html --html-details -o coverage/index.html
+		--html --html-details -o coverage/index.html \
+		--exclude '../test' \
+		--exclude '.*googletest.*'
 
-# ---------------------------
-# XML Report (CI Tools)
-# ---------------------------
 	cd build && gcovr -r .. \
-	    --filter='code/src' \
-	    --exclude='test' \
-	    --exclude='.*googletest.*' \
-	    --xml -o coverage/coverage.xml
+		--xml -o coverage/coverage.xml \
+		--exclude '../test' \
+		--exclude '.*googletest.*'
 
-# ---------------------------
-# Text Summary Report
-# ---------------------------
 	cd build && gcovr -r .. \
-	    --filter='code/src' \
-	    --exclude='test' \
-	    --exclude='.*googletest.*' \
-	    --txt -o coverage/summary.txt
+		--txt -o coverage/summary.txt \
+		--exclude '../test' \
+		--exclude '.*googletest.*'
 
-	@echo "[Coverage] ✅ Done! Open build/coverage/index.html to view the HTML report."
+	@echo "[Coverage] ✅ Done! Open build/coverage/index.html to view results."

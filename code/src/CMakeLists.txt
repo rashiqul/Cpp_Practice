@@ -1,20 +1,10 @@
-# ======================================================
+# =========================================
 # CMakeLists.txt for code/src/
-# This file automatically adds all subdirectories
-# ======================================================
+# Gathers all .cpp files recursively
+# =========================================
 
-# Find all immediate child entries (files or dirs) under code/src/
-# Loop over only the directories
-file(GLOB CHILD_DIRS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/*)
+# Recursively collect all .cpp files under code/src/
+file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
-# Loop through each child
-foreach(subdir ${CHILD_DIRS})
-
-    # Check if the entry is a directory (to exclude any stray files)
-    if(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${subdir}")
-
-        # Add it as a subdirectory to be built (assumes each has its own CMakeLists.txt)
-        add_subdirectory(${subdir})
-
-    endif()
-endforeach()
+# Make the list available to parent CMakeLists
+set(PROJECT_SOURCE_FILES ${SOURCE_FILES} PARENT_SCOPE)

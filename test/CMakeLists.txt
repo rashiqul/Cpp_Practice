@@ -32,23 +32,23 @@ endif()
 # -----------------------------------------
 # Collect test sources (*.cpp files in test/)
 # -----------------------------------------
-file(GLOB TEST_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+file(GLOB TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+
+# -----------------------------------------
+# Import all real source .cpp files for coverage
+# NOTE: This assumes code/src/CMakeLists.txt defines PROJECT_SOURCE_FILES
+# -----------------------------------------
+file(GLOB_RECURSE CODE_SOURCES
+    ${CMAKE_SOURCE_DIR}/code/src/*.cpp
 )
 
 # -----------------------------------------
-# Include FixedArray.cpp directly for coverage (important!)
-# This avoids coverage flags being stripped in static libs
+# Build TestExecutable from tests + actual implementation .cpp files
 # -----------------------------------------
-list(APPEND TEST_SOURCES
-    ${CMAKE_SOURCE_DIR}/code/src/FixedArray/FixedArray.cpp
-    ${CMAKE_SOURCE_DIR}/code/src/SensorInheritance/SensorInheritance.cpp
+add_executable(TestExecutable
+    ${TEST_SOURCES}
+    ${CODE_SOURCES}
 )
-
-# -----------------------------------------
-# Build TestExecutable
-# -----------------------------------------
-add_executable(TestExecutable ${TEST_SOURCES})
 
 # -----------------------------------------
 # Include public headers from main source
