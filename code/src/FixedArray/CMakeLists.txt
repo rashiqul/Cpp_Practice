@@ -12,6 +12,4 @@ add_library(FixedArray FixedArray.cpp)
 target_include_directories(FixedArray
     PUBLIC
     ${CMAKE_SOURCE_DIR}/code/inc
-    PRIVATE
-    ${CMAKE_SOURCE_DIR}/code/inc
 )
