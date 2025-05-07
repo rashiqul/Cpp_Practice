@@ -2,6 +2,8 @@
 #define SENSORINHERITANCE_H
 
 #include <iostream>
+#include <string>
+#include <unordered_map>
 #include <vector>
 #include <memory>
 
@@ -18,6 +20,9 @@ class Sensor
 
         // Read sensor data, virtual function
         virtual float readValue() const = 0;
+
+        // Manage hashmap of sensor data
+        static std::unordered_map<std::string, std::unique_ptr<Sensor>> createSensorMap();
 };
 
 // Derived class for Temperature Sensor
