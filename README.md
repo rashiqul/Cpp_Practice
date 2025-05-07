@@ -1,27 +1,62 @@
 # Cpp_Practice
 
-This repository contains C++ practice projects primarily targeted for embedded systems development. The structure and tools used in this repository are designed to facilitate efficient development, testing, and coverage analysis.
+This repository contains modular C++ practice projects primarily focused on embedded systems development. It is structured to support clean organization, test-driven development, and code coverage analysis using modern tooling.
 
-## Repository Structure
+---
 
-- **Source Code**: Located in `code/src/`, this directory contains the implementation files (`.cpp`).
-- **Header Files**: Located in `code/inc/`, this directory contains the header files (`.h`).
-- **Unit Tests**: Located in `test/`, this directory contains unit tests utilizing the GoogleTest and GoogleMock frameworks.
-- **Build System**: The repository uses CMake as the build system.
-- **Coverage Reports**: Coverage reports are generated using `gcovr` and can be found in `build/coverage/`. The main report is available in `index.html`.
+## 📁 Repository Structure
+```text
+Cpp_Practice/
+├── code/
+│ ├── inc/ # Header files (.h)
+│ └── src/ # Source files (.cpp)
+├── test/ # Unit tests using GoogleTest/GoogleMock
+├── build/ # CMake-generated build artifacts and coverage reports
+└── Makefile # Simplified interface for common tasks
+```
+---
 
-## Build and Test Instructions
+## 🛠️ Build System
+
+This project uses **CMake** for build configuration and dependency management. It supports modular builds and integrates with common testing and coverage tools.
+
+---
+
+## ✅ Build and Test Instructions
 
 The following `make` commands are available:
 
-- `make clean`: Clears the build directory.
-- `make build`: Builds the source code and unit test code.
-- `make run-tests`: Builds, compiles, and runs the unit test code.
-- `make coverage`: Generates coverage reports inside `build/coverage/`. Open `index.html` to view the report.
+- `make clean` — Remove build artifacts and coverage files.
+- `make build` — Configure and build all source files and test targets.
+- `make run-tests` — Run all unit tests using GoogleTest.
+- `make coverage` — Generate coverage reports in `build/coverage/index.html`.
 
-## Tools and Frameworks
+> 💡 Prerequisites: Ensure `cmake`, `make`, `gcovr`, and a C++ compiler (e.g., `g++` or `clang++`) are installed.
 
-- **GoogleTest/GoogleMock**: Used for unit testing.
-- **gcovr**: Used for generating code coverage reports.
+---
 
-This repository is structured to support best practices in embedded systems development and testing.
+## 🧪 Tools and Frameworks
+
+- **CMake** — Cross-platform build system.
+- **GoogleTest / GoogleMock** — Unit testing and mocking.
+- **gcovr** — Generates HTML code coverage reports.
+- **GCC / Clang** — Supported C++ compilers.
+
+---
+
+## 📊 Code Coverage
+
+After running `make coverage`, open the following file in your browser to view annotated source code coverage:
+
+build/coverage/index.html
+
+yaml
+Copy
+Edit
+
+---
+
+## 🔧 Notes
+
+- All modules are written in standard C++17.
+- The project favors clarity, modularity, and testability to support embedded software development patterns
